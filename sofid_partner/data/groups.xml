@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="update_partner_access_res_groups" model="res.groups">
+        <field name="name">Update Partner information access</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+    </record>
+
+</odoo>
