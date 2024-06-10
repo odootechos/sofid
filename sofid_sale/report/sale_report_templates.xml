@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <template id="report_saleorder_document_inherit"  inherit_id="sale.report_saleorder_document" priority="1000">
+            <xpath expr="//div[@name='expiration_date']//strong" position="replace">
+                <strong >Validity:</strong>
+            </xpath>
+            <xpath expr="//div[@t-if='doc.user_id.name']" position="inside">
+                <t t-if="doc.user_id.mobile">
+                    (<span class="m-0" t-field="doc.user_id.mobile"/>)
+                </t>
+            </xpath>
+            <xpath expr="//th[@name='th_taxes']" position="attributes">
+                <attribute name="class">oe_hidden</attribute>
+            </xpath>
+            <xpath expr="//th[@name='th_taxes']" position="after">
+                <th name="th_discounted_price" class="text-right">Discounted Price</th>
+            </xpath>
+            <xpath expr="//td[@name='td_taxes']" position="attributes">
+                <attribute name="class">oe_hidden</attribute>
+            </xpath>
+            <xpath expr="//td[@name='td_taxes']" position="after">
+                <td name="th_discounted_price" class="text-right">
+                    <span t-field="line.price_reduce"/>
+                </td>
+            </xpath>
+            <xpath expr="//p[@t-field='doc.note']" position="after">
+                Stop the present estimate at the sum of:
+                <t t-esc="doc.convert_price_to_word(current_subtotal)"/> <t t-esc="doc.currency_id.symbol"/>
+            </xpath>
+        </template>
+    
+    </data>
+    
+
+</odoo>
