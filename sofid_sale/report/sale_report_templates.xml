@@ -28,7 +28,7 @@
             </xpath>
             <xpath expr="//p[@t-field='doc.note']" position="after">
                 Stop the present estimate at the sum of:
-                <t t-esc="doc.convert_price_to_word(current_subtotal)"/> <t t-esc="doc.currency_id.symbol"/>
+                <t t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/> <t t-esc="doc.currency_id.symbol"/>
             </xpath>
         </template>
     
