@@ -49,19 +49,15 @@
         </template>
 
         <template id="invoiced_group" inherit_id="account.tax_groups_totals">
-            <xpath expr="//t[1]//td[1]//span[1]" position="attributes">
-               <attribute name="t-if">not vat_suspended and not vat_not_invoiced</attribute>
-            </xpath>
+            
             <xpath expr="//t[1]//td[1]//span[1]" position="after">
-               <span t-if="vat_not_invoiced">VAT 18% not invoiced</span>
-               <span t-if="vat_suspended">VAT suspended</span>
+               <span t-if="vat_not_invoiced"> not invoiced</span>
+               <span t-if="vat_suspended"> suspended</span>
             </xpath>
-            <xpath expr="//t[2]//td[1]//span[1]" position="attributes">
-               <attribute name="t-if">not vat_suspended and not vat_not_invoiced</attribute>
-            </xpath>
+            
             <xpath expr="//t[2]//td[1]//span[1]" position="after">
-               <span t-if="vat_not_invoiced">VAT 18% not invoiced</span>
-               <span t-if="vat_suspended">VAT suspended</span>
+               <span t-if="vat_not_invoiced"> not invoiced</span>
+               <span t-if="vat_suspended"> suspended</span>
             </xpath>
         </template>
 
