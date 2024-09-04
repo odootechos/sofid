@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <template id="report_vat_not_invoiced">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-set="print_with_payments" t-value="True"/>
+                    <t t-set="vat_not_invoiced" t-value="True"/>
+                    <t t-call="account.report_invoice_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_vat_suspended">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-set="print_with_payments" t-value="True"/>
+                    <t t-set="vat_suspended" t-value="True"/>
+                    <t t-call="account.report_invoice_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <template id="invoiced_document" inherit_id="account.document_tax_totals">
+            <xpath expr="//tr[@class='border-black o_total']//td[1]//strong" position="attributes">
+                <attribute name="t-if">not vat_suspended</attribute>
+            </xpath>
+            <xpath expr="//tr[@class='border-black o_total']//td[1]" position="inside">
+                <strong t-if="vat_suspended">Total TTC</strong>
+            </xpath>
+            <xpath expr="//tr[@class='border-black o_total']//td[2]//span" position="attributes">
+                <attribute name="t-if">not vat_not_invoiced</attribute>
+            </xpath>
+            <xpath expr="//tr[@class='border-black o_total']//td[2]" position="inside">
+                <span t-if="vat_not_invoiced" t-esc="tax_totals['formatted_amount_untaxed']"/>
+            </xpath>
+            <xpath expr="//tr[@class='border-black o_total']" position="after">
+                <tr t-if="vat_suspended" class="border-black o_total">
+                    <td><strong>Amount to be paid</strong></td>
+                    <td class="text-right">
+                        <span t-esc="tax_totals['formatted_amount_untaxed']"/>
+                    </td>
+                </tr>
+            </xpath>
+        </template>
+
+        <template id="invoiced_group" inherit_id="account.tax_groups_totals">
+            <xpath expr="//t[1]//td[1]//span[1]" position="attributes">
+               <attribute name="t-if">not vat_suspended and not vat_not_invoiced</attribute>
+            </xpath>
+            <xpath expr="//t[1]//td[1]//span[1]" position="after">
+               <span t-if="vat_not_invoiced">VAT 18% not invoiced</span>
+               <span t-if="vat_suspended">VAT suspended</span>
+            </xpath>
+            <xpath expr="//t[2]//td[1]//span[1]" position="attributes">
+               <attribute name="t-if">not vat_suspended and not vat_not_invoiced</attribute>
+            </xpath>
+            <xpath expr="//t[2]//td[1]//span[1]" position="after">
+               <span t-if="vat_not_invoiced">VAT 18% not invoiced</span>
+               <span t-if="vat_suspended">VAT suspended</span>
+            </xpath>
+        </template>
+
+        <record id="vat_not_invoiced" model="ir.actions.report">
+            <field name="name">VAT not invoiced </field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sofid_account.report_vat_not_invoiced</field>
+            <field name="report_file">sofid_account.report_vat_not_invoiced</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),
+ (4, ref('account.group_account_readonly'))]"/>
+        </record>
+
+        <record id="vat_suspended" model="ir.actions.report">
+            <field name="name">VAT suspended </field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">sofid_account.report_vat_suspended</field>
+            <field name="report_file">sofid_account.report_vat_suspended</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),
+ (4, ref('account.group_account_readonly'))]"/>
+        </record>
+        
+        <template id="external_layout_inherit"  inherit_id="web.external_layout_standard" priority="1000">
+            <xpath expr="//div[@t-attf-class='header o_company_#{company.id}_layout']" position="attributes">
+               <attribute name="t-if">o._name != 'account.move'</attribute>
+            </xpath>
+             <xpath expr="//div[@t-attf-class='footer o_standard_footer o_company_#{company.id}_layout']" position="attributes">
+               <attribute name="t-if">o._name != 'account.move'</attribute>
+            </xpath>
+            <xpath expr="//t[@t-call='web.address_layout']" position="attributes">
+                <attribute name="t-if">o._name != 'account.move'</attribute>
+            </xpath>
+           
+        </template>
+
+        <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+            <xpath expr="//p[@name='payment_communication']" position="before">
+                <t t-if="not vat_not_invoiced">
+                    <t t-set="amount" t-value="o.amount_total"/>
+                </t>
+                <t t-else="">
+                    <t t-set="amount" t-value="o.amount_untaxed"/>
+                </t>
+                <b>Stop the present invoice at the sum of
+                <t t-esc="o.currency_id.amount_to_text(amount)"/> <t t-esc="o.currency_id.symbol"/></b>
+            </xpath>
+        </template>
+    </data>
+    
+
+</odoo>
