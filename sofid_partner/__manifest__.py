@@ -18,12 +18,14 @@
     # any module necessary for this one to work correctly
     'depends': [
         'base',
-        'contacts'
+        'contacts',
+        'stock'
     ],
 
     # always loaded
     'data': [
         'data/groups.xml',
+        'views/res_partner_views.xml'
     ],
     
 }
