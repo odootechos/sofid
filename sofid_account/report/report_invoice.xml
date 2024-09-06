@@ -30,7 +30,7 @@
                 <attribute name="t-if">not doc</attribute>
             </xpath>
             <xpath expr="//tr[@class='border-black o_subtotal']//td" position="inside">
-                <strong >Total untaxed</strong>
+                <strong t-if="doc" >Total untaxed</strong>
             </xpath>
             <xpath expr="//tr[@class='border-black o_total']//td[1]//strong" position="attributes">
                 <attribute name="t-if">not vat_suspended and not doc</attribute>
