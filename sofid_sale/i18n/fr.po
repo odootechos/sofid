@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 14:03+0000\n"
-"PO-Revision-Date: 2024-07-29 14:03+0000\n"
+"POT-Creation-Date: 2024-09-06 08:39+0000\n"
+"PO-Revision-Date: 2024-09-06 08:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,6 +29,16 @@ msgstr "Délai de livraison:"
 #: model_terms:ir.ui.view,arch_db:sofid_sale.report_saleorder_document_inherit
 msgid "Discounted Price"
 msgstr "Prix remisé"
+
+#. module: sofid_sale
+#: model_terms:ir.ui.view,arch_db:sofid_sale.report_saleorder_document_inherit
+msgid ""
+"NB: Prior to any collection from our depots, please contact the sales administration department\n"
+"                            27 21 59 98 10 or 05 74 94 78 81 to check availability and prepare your order."
+msgstr ""
+"NB: Avant tout enlèvement à nos dépôts, merci de contacter au préalable l'administration des\n"
+"ventes au 27 21 59 98 10 ou au 05 74 94 78 81 pour le contrôle des disponibilités et la\n"
+"préparation de vôtre commande."
 
 #. module: sofid_sale
 #: model_terms:ir.ui.view,arch_db:sofid_sale.report_saleorder_document_inherit
