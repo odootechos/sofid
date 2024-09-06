@@ -26,11 +26,17 @@
         </template>
 
         <template id="invoiced_document" inherit_id="account.document_tax_totals">
+            <xpath expr="//tr[@class='border-black o_subtotal']//td//strong" position="attributes">
+                <attribute name="t-if">not doc</attribute>
+            </xpath>
+            <xpath expr="//tr[@class='border-black o_subtotal']//td" position="inside">
+                <strong >Total untaxed</strong>
+            </xpath>
             <xpath expr="//tr[@class='border-black o_total']//td[1]//strong" position="attributes">
-                <attribute name="t-if">not vat_suspended</attribute>
+                <attribute name="t-if">not vat_suspended and not doc</attribute>
             </xpath>
             <xpath expr="//tr[@class='border-black o_total']//td[1]" position="inside">
-                <strong t-if="vat_suspended">Total TTC</strong>
+                <strong t-if="vat_suspended or doc">Total TTC</strong>
             </xpath>
             <xpath expr="//tr[@class='border-black o_total']//td[2]//span" position="attributes">
                 <attribute name="t-if">not vat_not_invoiced</attribute>
