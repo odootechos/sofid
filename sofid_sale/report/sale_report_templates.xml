@@ -79,8 +79,26 @@
                 </td>
             </xpath>
             <xpath expr="//p[@t-field='doc.note']" position="after">
-                Stop the present estimate at the sum of:
-                <b><t t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/> <t t-esc="doc.currency_id.symbol"/></b>
+                <span style="font-size:13px">Stop the present estimate at the sum of:
+                <b><t t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/> <t t-esc="doc.currency_id.symbol"/></b></span>
+            </xpath>
+            <xpath expr="//table" position="attributes">
+                <attribute name="style">border-top: 1px solid !important;border-bottom: 1px solid !important</attribute>
+            </xpath>
+            <xpath expr="//p[@id='fiscal_position_remark']" position="attributes">
+                <attribute name="style">display: none !important;</attribute>
+            </xpath>
+            <xpath expr="//p[@t-if='not is_html_empty(doc.payment_term_id.note)']" position="after">
+                <span t-if="not is_html_empty(doc.payment_term_id.note)">
+                    <span style="font-size:13px" t-field="doc.payment_term_id.note"/>
+                </span>
+            </xpath>
+            <xpath expr="//p[@t-if='not is_html_empty(doc.payment_term_id.note)']" position="replace">
+                
+            </xpath>
+           
+            <xpath expr="//tr[@class='is-subtotal text-right']" position="attributes">
+                <attribute name="style">display: none !important;</attribute>
             </xpath>
         </template>
     
