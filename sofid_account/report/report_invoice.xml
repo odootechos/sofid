@@ -30,7 +30,7 @@
                 <attribute name="t-if">not doc</attribute>
             </xpath>
             <xpath expr="//tr[@class='border-black o_subtotal']//td" position="inside">
-                <strong >Total untaxed</strong>
+                <strong t-if="doc" >Total untaxed</strong>
             </xpath>
             <xpath expr="//tr[@class='border-black o_total']//td[1]//strong" position="attributes">
                 <attribute name="t-if">not vat_suspended and not doc</attribute>
@@ -108,7 +108,7 @@
            
         </template>
 
-        <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+        <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document" priority="1000">
             <xpath expr="//p[@name='payment_communication']" position="before">
                 <t t-if="not vat_not_invoiced">
                     <t t-set="amount" t-value="o.amount_total"/>
@@ -118,6 +118,27 @@
                 </t>
                 <b>Stop the present invoice at the sum of
                 <t t-esc="o.currency_id.amount_to_text(amount)"/> <t t-esc="o.currency_id.symbol"/></b>
+            </xpath>
+            <xpath expr="//tr[@class='is-subtotal text-right']" position="attributes">
+                <attribute name="style">display: none !important</attribute>
+            </xpath>
+            <xpath expr="//p[@name='payment_term']" position="before">
+                <span>General terms and conditions of sale overleaf</span>
+            </xpath>
+            <xpath expr="//p[@name='payment_term']" position="after">
+                <span>For payment by cheque, please make payable to <b> SOFID</b> </span>
+            </xpath>
+            <xpath expr="//p[@name='note']" position="replace">
+                
+            </xpath>
+            <xpath expr="//div[@id='qrcode']" position="replace">
+                
+            </xpath>
+            <xpath expr="//div[@name='comment']" position="replace">
+                
+            </xpath>
+            <xpath expr="//p[@name='incoterm']" position="replace">
+                
             </xpath>
         </template>
     </data>
