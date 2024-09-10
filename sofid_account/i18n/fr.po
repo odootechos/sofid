@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-06 09:07+0000\n"
-"PO-Revision-Date: 2024-09-06 09:07+0000\n"
+"POT-Creation-Date: 2024-09-09 08:51+0000\n"
+"PO-Revision-Date: 2024-09-09 08:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,14 +22,20 @@ msgid "(object._get_report_base_filename())"
 msgstr ""
 
 #. module: sofid_account
-#: model_terms:ir.ui.view,arch_db:sofid_account.invoiced_document
-msgid "<strong>Amount to be paid</strong>"
-msgstr "<strong>Montant à regler</strong>"
+#: model_terms:ir.ui.view,arch_db:sofid_account.report_invoice_document_inherit
+msgid ""
+"<span>For payment by cheque, please make payable to <b> SOFID</b> </span>"
+msgstr "<span>Pour tout paiement par chèque veuillez libeller à l’ordre de <b>SOFID</b> </span> "
+
+#. module: sofid_account
+#: model_terms:ir.ui.view,arch_db:sofid_account.report_invoice_document_inherit
+msgid "<span>General terms and conditions of sale overleaf</span>"
+msgstr "<span>Conditions générales de ventes au verso</span>"
 
 #. module: sofid_account
 #: model_terms:ir.ui.view,arch_db:sofid_account.invoiced_document
-msgid "<strong>Total untaxed</strong>"
-msgstr "<strong>Total HT</strong>"
+msgid "<strong>Amount to be paid</strong>"
+msgstr "<strong>Montant à regler</strong>"
 
 #. module: sofid_account
 #: model:res.groups,name:sofid_account.reconciliation_group_access
@@ -45,6 +51,11 @@ msgstr "Arrêtée la présente facture à la somme de"
 #: model_terms:ir.ui.view,arch_db:sofid_account.invoiced_document
 msgid "Total TTC"
 msgstr ""
+
+#. module: sofid_account
+#: model_terms:ir.ui.view,arch_db:sofid_account.invoiced_document
+msgid "Total untaxed"
+msgstr "Total HT"
 
 #. module: sofid_account
 #: model:ir.actions.report,name:sofid_account.vat_not_invoiced
