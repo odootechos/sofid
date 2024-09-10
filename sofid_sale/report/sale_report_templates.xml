@@ -85,8 +85,8 @@
             <xpath expr="//table" position="attributes">
                 <attribute name="style">border-top: 1px solid !important;border-bottom: 1px solid !important</attribute>
             </xpath>
-            <xpath expr="//p[@id='fiscal_position_remark']" position="attributes">
-                <attribute name="style">display: none !important;</attribute>
+            <xpath expr="//p[@id='fiscal_position_remark']" position="replace">
+                
             </xpath>
             <xpath expr="//p[@t-if='not is_html_empty(doc.payment_term_id.note)']" position="after">
                 <span t-if="not is_html_empty(doc.payment_term_id.note)">
