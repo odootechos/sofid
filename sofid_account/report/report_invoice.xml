@@ -25,7 +25,7 @@
             </t>
         </template>
 
-        <template id="invoiced_document" inherit_id="account.document_tax_totals">
+        <template id="invoiced_document" inherit_id="account.document_tax_totals" priority="1000">
             <xpath expr="//tr[@class='border-black o_subtotal']//td//strong" position="attributes">
                 <attribute name="t-if">not doc</attribute>
             </xpath>
@@ -54,8 +54,7 @@
             </xpath>
         </template>
 
-        <template id="invoiced_group" inherit_id="account.tax_groups_totals">
-            
+        <template id="invoiced_group" inherit_id="account.tax_groups_totals" priority="1000">
             <xpath expr="//t[1]//td[1]//span[1]" position="after">
                <span t-if="vat_not_invoiced"> not invoiced</span>
                <span t-if="vat_suspended"> suspended</span>
@@ -65,6 +64,11 @@
                <span t-if="vat_not_invoiced"> not invoiced</span>
                <span t-if="vat_suspended"> suspended</span>
             </xpath>
+
+            <xpath expr="//t[1]//td[1]//span[@class='text-nowrap']" position="attributes">
+               <attribute name="style">display: none !important</attribute>
+            </xpath>
+
         </template>
 
         <record id="vat_not_invoiced" model="ir.actions.report">
@@ -102,13 +106,14 @@
              <xpath expr="//div[@t-attf-class='footer o_standard_footer o_company_#{company.id}_layout']" position="attributes">
                <attribute name="t-if">o and o._name != 'account.move'</attribute>
             </xpath>
-            <xpath expr="//t[@t-call='web.address_layout']" position="attributes">
-                <attribute name="t-if">o and o._name != 'account.move'</attribute>
-            </xpath>
+            
            
         </template>
 
         <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document" priority="1000">
+            <xpath expr="//div[@class='page']" position="attributes">
+                <attribute name="style">margin-top: 80px !important</attribute>
+            </xpath>
             <xpath expr="//p[@name='payment_communication']" position="before">
                 <t t-if="not vat_not_invoiced">
                     <t t-set="amount" t-value="o.amount_total"/>
