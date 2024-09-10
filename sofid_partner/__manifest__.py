@@ -25,7 +25,6 @@
     # always loaded
     'data': [
         'data/groups.xml',
-        'views/res_partner_views.xml'
     ],
     
 }
