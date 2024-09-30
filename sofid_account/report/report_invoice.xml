@@ -145,6 +145,8 @@
             <xpath expr="//p[@name='incoterm']" position="replace">
                 
             </xpath>
+            <xpath expr="//th[@name='th_taxes']" position="replace"/>
+            <xpath expr="//td[contains(@t-attf-class, 'text-left')]" position="replace"/>
         </template>
     </data>
     
