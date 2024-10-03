@@ -106,14 +106,28 @@
              <xpath expr="//div[@t-attf-class='footer o_standard_footer o_company_#{company.id}_layout']" position="attributes">
                <attribute name="t-if">o and o._name != 'account.move'</attribute>
             </xpath>
+            <xpath expr="//t[@t-call='web.address_layout']" position="attributes">
+               <attribute name="t-if">o and o._name != 'account.move'</attribute>
+            </xpath>
+             <xpath expr="//div[@t-attf-class='header o_company_#{company.id}_layout']" position="before">
+                <div t-if="o and o._name == 'account.move'" class="header" t-att-style="report_header_style">
+                    <t t-set="address">
+                        <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+                        <div t-if="o.partner_id.vat" class="mt16">
+                            <t t-if="o.company_id.account_fiscal_country_id.vat_label" t-esc="o.company_id.account_fiscal_country_id.vat_label" id="inv_tax_id_label"/>
+                            <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat"/></div>
+                    </t>
+                    <div class="pt-5">
+                        <t t-call="web.address_layout"/>
+                    </div>
+                </div>
+            </xpath>
             
            
         </template>
 
         <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document" priority="1000">
-            <xpath expr="//div[@class='page']" position="attributes">
-                <attribute name="style">margin-top: 80px !important</attribute>
-            </xpath>
+            
             <xpath expr="//p[@name='payment_communication']" position="before">
                 <t t-if="not vat_not_invoiced">
                     <t t-set="amount" t-value="o.amount_total"/>
