@@ -113,9 +113,9 @@
                 <div t-if="o and o._name == 'account.move'" class="header" t-att-style="report_header_style">
                     <t t-set="address">
                         <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
-                        <div t-if="o.partner_id.vat" class="mt16">
-                            <t t-if="o.company_id.account_fiscal_country_id.vat_label" t-esc="o.company_id.account_fiscal_country_id.vat_label" id="inv_tax_id_label"/>
-                            <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat"/></div>
+                        <div t-if="o.partner_id.vat" class="mt16"> 
+                            NCC: <span t-field="o.partner_id.vat"/>
+                        </div>
                     </t>
                     <div class="pt-5">
                         <t t-call="web.address_layout"/>
