@@ -135,17 +135,19 @@
                 <t t-else="">
                     <t t-set="amount" t-value="o.amount_untaxed"/>
                 </t>
-                <b>Stop the present invoice at the sum of
-                <t t-esc="o.currency_id.amount_to_text(amount)"/> <t t-esc="o.currency_id.symbol"/></b>
+                <p>
+                    <b>Stop the present invoice at the sum of
+                    <t t-esc="o.currency_id.amount_to_text(amount)"/> <t t-esc="o.currency_id.symbol"/></b>
+                </p>
             </xpath>
             <xpath expr="//tr[@class='is-subtotal text-right']" position="attributes">
                 <attribute name="style">display: none !important</attribute>
             </xpath>
             <xpath expr="//p[@name='payment_term']" position="before">
-                <span>General terms and conditions of sale overleaf</span>
+                <span>General terms and conditions of sale overleaf<br/></span>
             </xpath>
             <xpath expr="//p[@name='payment_term']" position="after">
-                <span>For payment by cheque, please make payable to <b> SOFID</b> </span>
+                <span>For payment by cheque, please make payable to <b> SOFID</b> <br/></span>
             </xpath>
             <xpath expr="//p[@name='note']" position="replace">
                 
@@ -161,6 +163,9 @@
             </xpath>
             <xpath expr="//th[@name='th_taxes']" position="replace"/>
             <xpath expr="//td[contains(@t-attf-class, 'text-left')]" position="replace"/>
+            <xpath expr="//span[@t-field='line.product_uom_id']" position="attributes">
+                <attribute name="style">display: none !important</attribute>
+            </xpath>
         </template>
     </data>
     
