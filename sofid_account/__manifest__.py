@@ -27,6 +27,7 @@
         'data/groups.xml',
         # Views
         'views/account_journal_dashboard_view.xml',
+        'views/account_taxe_views.xml',
         # Report
         'report/report_invoice.xml'
     ],

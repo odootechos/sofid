@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-28 08:30+0000\n"
-"PO-Revision-Date: 2024-11-28 08:30+0000\n"
+"POT-Creation-Date: 2024-12-09 11:34+0000\n"
+"PO-Revision-Date: 2024-12-09 11:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,13 @@ msgstr ""
 #: model:ir.actions.report,print_report_name:sofid_account.vat_not_invoiced
 #: model:ir.actions.report,print_report_name:sofid_account.vat_suspended
 msgid "(object._get_report_base_filename())"
+msgstr ""
+
+#. module: sofid_account
+#: model_terms:ir.ui.view,arch_db:sofid_account.view_tax_form_inherit
+msgid ""
+"<span class=\"o_form_label oe_inline\" "
+"attrs=\"{'invisible':[('amount_type','=','fixed')]}\">%</span>"
 msgstr ""
 
 #. module: sofid_account
@@ -41,6 +48,16 @@ msgid "<strong>Amount to be paid</strong>"
 msgstr "<strong>Montant à regler</strong>"
 
 #. module: sofid_account
+#: model:ir.model.fields,field_description:sofid_account.field_account_tax__amount_report
+msgid "Amount Report"
+msgstr "Montant sur les impressions"
+
+#. module: sofid_account
+#: model:ir.model,name:sofid_account.model_account_move
+msgid "Journal Entry"
+msgstr "Pièce comptable"
+
+#. module: sofid_account
 #: model_terms:ir.ui.view,arch_db:sofid_account.external_layout_inherit
 msgid "NCC:"
 msgstr ""
@@ -54,6 +71,11 @@ msgstr "Accès lettrage"
 #: model_terms:ir.ui.view,arch_db:sofid_account.report_invoice_document_inherit
 msgid "Stop the present invoice at the sum of"
 msgstr "Arrêtée la présente facture à la somme de"
+
+#. module: sofid_account
+#: model:ir.model,name:sofid_account.model_account_tax
+msgid "Tax"
+msgstr "Taxe"
 
 #. module: sofid_account
 #: model_terms:ir.ui.view,arch_db:sofid_account.invoiced_document
