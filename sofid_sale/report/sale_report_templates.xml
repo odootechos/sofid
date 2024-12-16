@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        
+        <template id="external_layout_inherit"  inherit_id="web.external_layout_standard" priority="1000">
+            <xpath expr="//img[@t-if='company.logo']" position="attributes">
+               <attribute name="style">max-height: 100px;</attribute>
+            </xpath>
+            <xpath expr="//div[@t-if='company.logo or company.report_header']" position="attributes">
+                <attribute name="style">display: none</attribute>
+            </xpath>
+           
+        </template>
+
+        <template id="report_saleorder_document_inherit"  inherit_id="sale.report_saleorder_document" priority="1000">
+            <xpath expr="//div[@class='col-auto col-3 mw-100 mb-2'][1]" position="attributes">
+                <attribute name="class">col-3</attribute>
+            </xpath>
+            <xpath expr="//div[@class='col-auto col-3 mw-100 mb-2'][2]" position="attributes">
+                <attribute name="class">col-2</attribute>
+            </xpath>
+            <xpath expr="//div[@class='col-auto col-3 mw-100 mb-2'][3]" position="attributes">
+                <attribute name="class">col-2</attribute>
+            </xpath>
+           
+            <xpath expr="//div[@name='expiration_date']//strong" position="replace">
+                <strong >Validity:</strong>
+            </xpath>
+            <xpath expr="//div[@t-if='doc.user_id.name']" position="attributes">
+                <attribute name="class">col-5</attribute>
+            </xpath>
+            <xpath expr="//p[@t-field='doc.user_id']" position="replace">
+                <br/><span class="m-0" t-field="doc.user_id"/>
+            </xpath>
+            <xpath expr="//div[@t-if='doc.user_id.name']" position="inside">
+                <t t-if="doc.user_id.mobile">
+                    (<span class="m-0" t-field="doc.user_id.mobile"/>)
+                </t>
+            </xpath>
+            <xpath expr="//div[@name='so_total_summary']" position="replace">
+                <div class="row">
+                    <div class="col-8" style="font-size:13px">
+                        Delivery time:
+                        <span style="color:red"><strong><t t-esc="', '.join(doc.tag_ids.mapped('name'))"/></strong></span>
+                        <p class="">
+                            NB: Prior to any collection from our depots, please contact the sales administration department
+                            27 21 59 98 10 or 05 74 94 78 81 to check availability and prepare your order.
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <div name="so_total_summary " >
+                            <div id="total" class="row" name="total">
+                                <div class="col-md-12 ml-auto">
+                                    <table class="table table-sm">
+                                        <!-- Tax totals -->
+                                        <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)"/>
+                                        <t t-call="account.document_tax_totals"/>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//th[@name='th_taxes']" position="attributes">
+                <attribute name="class">oe_hidden</attribute>
+            </xpath>
+            <xpath expr="//th[@name='th_taxes']" position="after">
+                <th name="th_discounted_price" class="text-right">Discounted Price</th>
+            </xpath>
+            <xpath expr="//td[@name='td_taxes']" position="attributes">
+                <attribute name="class">oe_hidden</attribute>
+            </xpath>
+            <xpath expr="//td[@name='td_taxes']" position="after">
+                <td name="th_discounted_price" class="text-right">
+                    <span t-field="line.price_reduce"/>
+                </td>
+            </xpath>
+            <xpath expr="//p[@t-field='doc.note']" position="after">
+                <span style="font-size:13px">Stop the present estimate at the sum of:
+                <b><t t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/> <t t-esc="doc.currency_id.symbol"/></b></span>
+            </xpath>
+            <xpath expr="//table" position="attributes">
+                <attribute name="style">border-top: 1px solid !important;border-bottom: 1px solid !important</attribute>
+            </xpath>
+            <xpath expr="//p[@id='fiscal_position_remark']" position="replace">
+                
+            </xpath>
+            <xpath expr="//p[@t-if='not is_html_empty(doc.payment_term_id.note)']" position="after">
+                <span t-if="not is_html_empty(doc.payment_term_id.note)">
+                    <span style="font-size:13px" t-field="doc.payment_term_id.note"/>
+                </span>
+            </xpath>
+            <xpath expr="//p[@t-if='not is_html_empty(doc.payment_term_id.note)']" position="replace">
+                
+            </xpath>
+           
+            <xpath expr="//tr[@class='is-subtotal text-right']" position="attributes">
+                <attribute name="style">display: none !important;</attribute>
+            </xpath>
+        </template>
+    
+    </data>
+    
+
+</odoo>
