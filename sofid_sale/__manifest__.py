@@ -24,6 +24,8 @@
     # always loaded
     'data': [
         # report
-        'report/sale_report_templates.xml'
+        'report/sale_report_templates.xml',
+        # Views
+        'views/sale_order_views.xml'
     ]
 }
