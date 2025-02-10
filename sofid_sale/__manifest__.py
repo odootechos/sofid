@@ -26,6 +26,7 @@
         # report
         'report/sale_report_templates.xml',
         # Views
-        'views/sale_order_views.xml'
+        'views/sale_order_views.xml',
+        'views/product_views.xml'
     ]
 }
