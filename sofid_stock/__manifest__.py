@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Sofid Sale",
+    'name': "sofid_stock",
 
     'description': """
-        Sofid Sale customization addons
+        Manage SOFID stock
     """,
 
     'author': "Arkeup",
@@ -18,15 +18,19 @@
     # any module necessary for this one to work correctly
     'depends': [
         'base',
-        'sale'
+        'stock'
     ],
 
     # always loaded
     'data': [
-        # report
-        'report/sale_report_templates.xml',
+        # Security
+        'security/res_groups.xml',
         # Views
-        'views/sale_order_views.xml',
-        'views/product_views.xml'
-    ]
+        'views/stock_picking_views.xml',
+        'views/stock_quant_views.xml'
+    ],
+    # only loaded in demonstration mode
+    'demo': [
+        'demo/demo.xml',
+    ],
 }
