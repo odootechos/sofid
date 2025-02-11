@@ -3,9 +3,9 @@
 # from odoo import models, fields, api
 
 
-# class sofid_sale(models.Model):
-#     _name = 'sofid_sale.sofid_sale'
-#     _description = 'sofid_sale.sofid_sale'
+# class sofid_stock(models.Model):
+#     _name = 'sofid_stock.sofid_stock'
+#     _description = 'sofid_stock.sofid_stock'
 
 #     name = fields.Char()
 #     value = fields.Integer()
