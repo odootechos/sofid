@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-07 06:57+0000\n"
-"PO-Revision-Date: 2025-02-07 06:57+0000\n"
+"POT-Creation-Date: 2025-02-19 12:32+0000\n"
+"PO-Revision-Date: 2025-02-19 12:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -46,6 +46,12 @@ msgid "Non-inventoried item"
 msgstr "Article non inventorié"
 
 #. module: sofid_sale
+#: code:addons/sofid_sale/models/sale_order.py:0
+#, python-format
+msgid "Please re-enter the quantity: this field must be an integer."
+msgstr "Veuillez resaisir la quantité : ce champ doit être un entier."
+
+#. module: sofid_sale
 #: model:ir.model.fields,field_description:sofid_sale.field_sale_order__purchase_order_ids
 msgid "Purchase Order"
 msgstr "BC Achat"
@@ -54,6 +60,11 @@ msgstr "BC Achat"
 #: model:ir.model,name:sofid_sale.model_sale_order
 msgid "Sales Order"
 msgstr "Bon de commande"
+
+#. module: sofid_sale
+#: model:ir.model,name:sofid_sale.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
 
 #. module: sofid_sale
 #: model_terms:ir.ui.view,arch_db:sofid_sale.report_saleorder_document_inherit
