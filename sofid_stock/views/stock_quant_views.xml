@@ -11,6 +11,9 @@
                 <xpath expr="//button[@name='action_apply_inventory']" position="attributes">
                     <attribute name="groups">sofid_stock.group_stock_validator</attribute>
                 </xpath>
+                <xpath expr="//field[@name='inventory_quantity']" position="attributes">
+                    <attribute name="widget">integer_only</attribute>
+                </xpath>
             </field>
         </record>
     
