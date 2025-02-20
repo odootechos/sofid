@@ -28,5 +28,10 @@
         # Views
         'views/sale_order_views.xml',
         'views/product_views.xml'
-    ]
+    ],
+    "assets": {
+        "web.assets_backend": [
+            "sofid_sale/static/src/js/integer_constrains_widget.js"
+        ],
+    },
 }

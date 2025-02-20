@@ -7,10 +7,17 @@
 			<field name="name">sale.order.view.form.inherit</field>
 			<field name="model">sale.order</field>
 			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="priority" eval="99"/>
 			<field name="arch" type="xml">
 				<field name="payment_term_id" position="before">
 					<field name="purchase_order_ids" widget="many2many_tags" />
 				</field>
+				<xpath expr="//page[@name='order_lines']//tree//field[@name='product_uom_qty']" position="attributes">
+					<attribute name="widget">integer_only</attribute>
+				</xpath>
+				<xpath expr="//page[@name='optional_products']//tree//field[@name='quantity']" position="attributes">
+					<attribute name="widget">integer_only</attribute>
+				</xpath>
 			</field>
 		</record>
 	
