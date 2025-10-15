@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+
+        <!-- Pied de page avec cachet + infos société -->
+        <xpath expr="//p[@t-if='not is_html_empty(doc.payment_term_id.note)']" position="after">
+            <div class="mt-4 text-right" style="margin-right: 30px;">
+                <img src="/sale_order_proforma_custom/static/img/signature.jpg"
+                     style="width:125px; height:125px; object-fit:contain;"/>
+            </div>
+        </xpath>
+
+    </template>
+</odoo>
