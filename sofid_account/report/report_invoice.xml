@@ -55,13 +55,11 @@
         </template>
 
         <template id="invoiced_group" inherit_id="account.tax_groups_totals" priority="1000">
-           <xpath expr="//t[1]//td[1]//span[1]" position="after">
-               <span t-if="vat_not_invoiced"> not invoiced</span>
+            <xpath expr="//t[1]//td[1]//span[1]" position="after">
                <span t-if="vat_suspended"> suspended</span>
             </xpath>
             
             <xpath expr="//t[2]//td[1]//span[1]" position="after">
-               <span t-if="vat_not_invoiced"> not invoiced</span>
                <span t-if="vat_suspended"> suspended</span>
             </xpath>
 
