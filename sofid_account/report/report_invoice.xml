@@ -55,23 +55,21 @@
         </template>
 
         <template id="invoiced_group" inherit_id="account.tax_groups_totals" priority="1000">
-           <xpath expr="//t[1]//td[1]//span[1]" position="after">
-               <span t-if="vat_not_invoiced"> not invoiced</span>
+            <xpath expr="//t[1]//td[1]//span[1]" position="after">
                <span t-if="vat_suspended"> suspended</span>
             </xpath>
             
             <xpath expr="//t[2]//td[1]//span[1]" position="after">
-               <span t-if="vat_not_invoiced"> not invoiced</span>
                <span t-if="vat_suspended"> suspended</span>
             </xpath>
 
             <xpath expr="//t[1]//td[1]//span[@class='text-nowrap']" position="attributes">
                <attribute name="style">display: none !important</attribute>
             </xpath>
-            <!-- <xpath expr="//tr" position="attributes">
+            <xpath expr="//tr" position="attributes">
                 <attribute name="t-if">not vat_not_invoiced</attribute>
-            </xpath> -->
-            <!-- <xpath expr="//t[@t-foreach]" position="before">
+            </xpath>
+            <xpath expr="//t[@t-foreach]" position="before">
                 <t t-if="vat_not_invoiced">
                     <t t-set="tax_not_invoiced_json" t-value="o.get_tax_no_invoiced(o.invoice_line_ids)"/>
                     <t t-foreach="tax_not_invoiced_json" t-as="tax_not_invoiced">
@@ -85,7 +83,7 @@
                         </tr>
                     </t>
                 </t>    
-            </xpath> -->
+            </xpath>
 
         </template>
 
