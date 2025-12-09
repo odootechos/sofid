@@ -60,22 +60,10 @@
                             ]
                         }"/>
             </header>
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_fne_locked', '=', True)]}</attribute>
+            </xpath>
 
-<!--                <div name="button_box" position="inside">-->
-<!--                    <div style="text-align:center; width:100%; margin-top:10px;">-->
-<!--                        <button type="object"-->
-<!--                                name="action_show_fne_balance"-->
-<!--                                class="oe_stat_button"-->
-<!--                                icon="fa-money"-->
-<!--                                style="float:none; display:inline-block;">-->
-
-<!--                            <field name="fne_global_balance_display"-->
-<!--                                   string="Balance FNE"-->
-<!--                                   widget="statinfo"-->
-<!--                                   options="{'suffix': ' FCFA'}"/>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </div>-->
             <xpath expr="//sheet" position="inside">
                 <div style="position: absolute; top: 10px; right: 10px;"
                      attrs="{'invisible': [('fne_status', '!=', 'signed')]}">
@@ -87,7 +75,16 @@
                 <field name="fne_payment_method"/>
             </xpath>
             <xpath expr="//button[@name='button_draft']" position="attributes">
-                <attribute name="attrs">{'invisible': [('state','=','posted'), ('fne_status','=','signed')]}
+                <attribute name="attrs">
+                    {
+                        'invisible': [
+                            '|',
+                            # Hide if it is a Signed Invoice
+                            '&amp;', ('move_type', '=', 'out_invoice'), ('fne_status', '=', 'signed'),
+                            # OR Hide if it is a Signed Refund (Avoir)
+                            '&amp;', ('move_type', '=', 'out_refund'), ('fne_refund_reference', '!=', False)
+                        ]
+                    }
                 </attribute>
             </xpath>
             <!-- Ajouter colonne Remise (€) dans les lignes -->
@@ -101,7 +98,7 @@
                         <field name="fne_status" readonly="1" invisible="1"/>
                         <field name="fne_reference" readonly="1"/>
                         <field name="fne_invoiceId" readonly="1"/>
-                        <field name="fne_refund_reference" readonly="1" invisible="1"/>
+                        <field name="fne_refund_reference" readonly="1"/>
                         <field name="fne_parent_reference" readonly="1" invisible="1"/>
                         <field name="fne_token" readonly="1" invisible="1"/>
                         <field name="fne_refund_token" readonly="1" invisible="1"/>

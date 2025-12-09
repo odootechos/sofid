@@ -3,11 +3,11 @@
   <data noupdate="1">
     <record id="sofid_dgi_params_api" model="ir.config_parameter">
       <field name="key">sofid_dgi.api_key</field>
-      <field name="value">LjNBl7kS4dmxkgaHbIjWPJ2434vA1s2T</field>
+      <field name="value">8iJlo9DmfcAUnSsEdMYqKO1asZ7mLlOU</field>
     </record>
     <record id="sofid_dgi_params_url" model="ir.config_parameter">
       <field name="key">sofid_dgi.api_url</field>
-      <field name="value">http://54.247.95.108/ws</field>
+      <field name="value">https://www.services.fne.dgi.gouv.ci/ws</field>
     </record>
     <record id="sofid_dgi_fne_production_mode" model="ir.config_parameter">
       <field name="key">sofid_dgi.fne_production_mode</field>
