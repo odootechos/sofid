@@ -28,13 +28,13 @@ class AccountMove(models.Model):
     fne_logo = fields.Binary("Logo FNE", compute="_compute_fne_logo")
 
     fne_reference = fields.Char("Référence FNE", readonly=True)
-
     fne_token = fields.Char("Token FNE", readonly=True)
     fne_send_date = fields.Datetime("Date d'envoi FNE", readonly=True)
     fne_parent_reference = fields.Char("Référence FNE origine", readonly=True)
     fne_invoiceId = fields.Char("ID FNE", readonly=True)
     fne_refund_reference = fields.Char("Référence FNE Avoir", readonly=True)
     fne_refund_token = fields.Char("Token FNE Avoir", readonly=True)
+    is_fne_locked = fields.Boolean(compute="_compute_is_fne_locked")
 
     fne_payment_method = fields.Selection([
         ('card', 'Carte bancaire'),
@@ -74,6 +74,7 @@ class AccountMove(models.Model):
     )
 
 
+
     def _compute_fne_global_balance_display(self):
         for rec in self:
             # Format 1 500 000 FCFA
@@ -81,6 +82,8 @@ class AccountMove(models.Model):
 
     def action_show_fne_balance(self):
         return True
+
+
 
 
     @api.depends('invoice_line_ids.discount_amount')
@@ -133,6 +136,7 @@ class AccountMove(models.Model):
 
     def _build_items(self):
         items = []
+
         for line in self.invoice_line_ids:
             item = {
                 'reference': line.product_id.default_code or '',
@@ -142,29 +146,44 @@ class AccountMove(models.Model):
                 'discount': float(line.discount or 0),
                 'measurementUnit': line.product_uom_id.name or '',
             }
+
             taxes = []
+            custom_taxes = []
 
             for tax in line.tax_ids:
                 tax_name = (tax.name or '').upper().strip()
 
-                # Mapping des taxes Odoo vers FNE
+                # ---- Taxes standard FNE ----
                 if 'TVA 18% NON FACTURÉE' in tax_name:
                     taxes.append('TVAC')
-                elif 'TVA 18.0%' in tax_name:
+
+                elif 'TVA 18.0%' in tax_name or 'TVA 18%' in tax_name:
                     taxes.append('TVA')
+
                 elif 'TVAB' in tax_name:
                     taxes.append('TVAB')
+
                 elif 'TVAD' in tax_name:
                     taxes.append('TVAD')
+
                 elif 'TVAE' in tax_name:
                     taxes.append('TVAE')
-                # Sinon, ignorer ou logger l'info
+
+                # ---- Taxe AIRSI 5.0% (toujours custom) ----
+                elif 'AIRSI' in tax_name:
+                    custom_taxes.append({
+                        "name": "AIRSI",  # Nom attendu par le FNE
+                        "amount": 5.0  # Taux fixe : 5.0%
+                    })
+
                 else:
-                    _logger.warning("Taxe non reconnue pour FNE : %s", tax_name)
+                    _logger.warning("⚠️ Taxe non reconnue pour FNE : %s", tax_name)
 
             item['taxes'] = taxes
-            item['customTaxes'] = []
+            item['customTaxes'] = custom_taxes
+
             items.append(item)
+
         return items
     # ============================
     # BUILD PAYLOAD FACTURE
@@ -329,3 +348,26 @@ class AccountMove(models.Model):
             'url': fne_url,
             'target': 'new',
         }
+
+    def action_draft(self):
+        for move in self:
+            # 1. Block for Standard Invoices (B2B/B2C) if already signed
+            if move.move_type == 'out_invoice' and move.fne_status == 'signed':
+                raise UserError("Action refusée : Cette facture a déjà été déclarée à la FNE. Vous ne pouvez plus la modifier.")
+
+            # 2. Block for Refunds (Avoirs) if already declared
+            if move.move_type == 'out_refund' and move.fne_refund_reference:
+                raise UserError("Action refusée : Cet avoir a déjà été déclaré à la FNE.")
+
+        # If checks pass, call the standard Odoo behavior
+        return super(AccountMove, self).action_draft()
+
+    @api.depends('move_type', 'fne_status', 'fne_refund_reference')
+    def _compute_is_fne_locked(self):
+        for move in self:
+            if move.move_type == 'out_invoice' and move.fne_status == 'signed':
+                move.is_fne_locked = True
+            elif move.move_type == 'out_refund' and move.fne_refund_reference:
+                move.is_fne_locked = True
+            else:
+                move.is_fne_locked = False
