@@ -1,0 +1,20 @@
+/** @odoo-module **/
+import { registry } from "@web/core/registry";
+import { patch } from "@web/core/utils/patch";
+import { FormController } from "@web/views/form/form_controller";
+import { rpc } from "@web/core/network/rpc";
+
+patch(FormController.prototype, {
+    async _onFieldChanged(event) {
+        await this._super(event);
+
+        // Si l'utilisateur modifie le nom de l'article
+        if (event.data.changes.name && this.model.root.type === 'product.template') {
+            const name = event.data.changes.name;
+            if (name && name.length >= 3) {
+                const result = await rpc('/product_autocode/generate_code', { name });
+                this.model.root.update({ default_code: result.code });
+            }
+        }
+    },
+});
