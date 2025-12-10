@@ -1,0 +1,137 @@
+<odoo>
+    <record id="view_move_form_fne_integration" model="ir.ui.view">
+        <field name="name">account.move.form.fne.integration</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <header position="inside">
+
+                <!-- Envoyer facture FNE (facture normale) -->
+                <button name="action_send_to_dgi"
+                        type="object"
+                        string="Envoyer facture FNE"
+                        class="oe_highlight"
+                        attrs="{
+                            'invisible': ['|',
+                                ('move_type','!=','out_invoice'),
+                                '|',
+                                ('state','!=','posted'),
+                                ('fne_status','!=','draft')
+                            ]
+                        }"/>
+
+                <!-- Voir facture FNE (facture normale) -->
+                <button name="action_view_fne_invoice"
+                        type="object"
+                        string="Voir la facture FNE"
+                        attrs="{
+                            'invisible': ['|',
+                                ('move_type','!=','out_invoice'),
+                                ('fne_status','!=','signed')
+                            ]
+                        }"/>
+
+                <!-- Envoyer avoir FNE (uniquement pour les avoirs comptabilisés) -->
+                <button name="action_send_refund_to_dgi"
+                        type="object"
+                        string="Envoyer l'avoir FNE"
+                        class="oe_highlight"
+                        attrs="{
+                            'invisible': ['|',
+                                ('move_type','!=','out_refund'),
+                                '|',
+                                ('state','!=','posted'),
+                                ('fne_refund_reference','!=',False)
+                            ]
+                        }"/>
+
+                <!-- Voir avoir FNE (uniquement si envoyé à la FNE) -->
+                <button name="action_view_fne_invoice"
+                        type="object"
+                        string="Voir l'avoir FNE"
+                        class="oe_highlight"
+                        attrs="{
+                            'invisible': ['|',
+                                ('move_type','!=','out_refund'),
+                                '|',
+                                ('fne_refund_reference','=',False),
+                                ('fne_refund_token','=',False)
+                            ]
+                        }"/>
+            </header>
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_fne_locked', '=', True)]}</attribute>
+            </xpath>
+
+            <xpath expr="//sheet" position="inside">
+                <div style="position: absolute; top: 10px; right: 10px;"
+                     attrs="{'invisible': [('fne_status', '!=', 'signed')]}">
+                    <img alt="FNE Logo" src="/sofid_dgi/static/src/image/logofne.png"
+                         style="max-height: 50px; max-width: 50px;"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='payment_reference']" position="after">
+                <field name="fne_payment_method"/>
+            </xpath>
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="attrs">
+                    {
+                        'invisible': [
+                            '|',
+                            # Hide if it is a Signed Invoice
+                            '&amp;', ('move_type', '=', 'out_invoice'), ('fne_status', '=', 'signed'),
+                            # OR Hide if it is a Signed Refund (Avoir)
+                            '&amp;', ('move_type', '=', 'out_refund'), ('fne_refund_reference', '!=', False)
+                        ]
+                    }
+                </attribute>
+            </xpath>
+            <!-- Ajouter colonne Remise (€) dans les lignes -->
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']" position="after">
+                <field name="discount_amount" readonly="1"/>
+            </xpath>
+
+            <notebook position="inside">
+                <page string="FNE">
+                    <group>
+                        <field name="fne_status" readonly="1" invisible="1"/>
+                        <field name="fne_reference" readonly="1"/>
+                        <field name="fne_invoiceId" readonly="1"/>
+                        <field name="fne_refund_reference" readonly="1"/>
+                        <field name="fne_parent_reference" readonly="1" invisible="1"/>
+                        <field name="fne_token" readonly="1" invisible="1"/>
+                        <field name="fne_refund_token" readonly="1" invisible="1"/>
+                        <field name="fne_send_date" readonly="1"/>
+                        <field name="fne_footer" nolabel="1" colspan="2"/>
+                        <field name="fne_global_discount" readonly="1" invisible="1"/>
+                        <field name="fne_template" invisible="1"/>
+                    </group>
+                </page>
+            </notebook>
+
+        </field>
+    </record>
+
+
+    <record id="view_move_tree_fne_integration" model="ir.ui.view">
+        <field name="name">account.move.tree.fne.integration</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+
+            <!-- Ajouter la référence FNE -->
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="fne_reference_display"/>
+            </xpath>
+
+            <!-- Ajouter le logo FNE -->
+            <xpath expr="//field[@name='fne_reference_display']" position="before">
+                <field name="fne_logo" widget="image" class="oe_avatar"
+                       options="{'size': [25, 25]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
