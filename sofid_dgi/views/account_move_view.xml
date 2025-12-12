@@ -7,19 +7,20 @@
 
             <header position="inside">
 
+
                 <!-- Envoyer facture FNE (facture normale) -->
-                <button name="action_send_to_dgi"
+                <button name="action_open_send_confirm_wizard"
                         type="object"
                         string="Envoyer facture FNE"
                         class="oe_highlight"
                         attrs="{
-                            'invisible': ['|',
-                                ('move_type','!=','out_invoice'),
-                                '|',
-                                ('state','!=','posted'),
-                                ('fne_status','!=','draft')
-                            ]
-                        }"/>
+            'invisible': ['|',
+                ('move_type','!=','out_invoice'),
+                '|',
+                ('state','!=','posted'),
+                ('fne_status','!=','draft')
+            ]
+        }"/>
 
                 <!-- Voir facture FNE (facture normale) -->
                 <button name="action_view_fne_invoice"
@@ -33,18 +34,18 @@
                         }"/>
 
                 <!-- Envoyer avoir FNE (uniquement pour les avoirs comptabilisés) -->
-                <button name="action_send_refund_to_dgi"
+                <button name="action_open_send_refund_confirm_wizard"
                         type="object"
                         string="Envoyer l'avoir FNE"
                         class="oe_highlight"
                         attrs="{
-                            'invisible': ['|',
-                                ('move_type','!=','out_refund'),
-                                '|',
-                                ('state','!=','posted'),
-                                ('fne_refund_reference','!=',False)
-                            ]
-                        }"/>
+            'invisible': ['|',
+                ('move_type','!=','out_refund'),
+                '|',
+                ('state','!=','posted'),
+                ('fne_refund_reference','!=',False)
+            ]
+        }"/>
 
                 <!-- Voir avoir FNE (uniquement si envoyé à la FNE) -->
                 <button name="action_view_fne_invoice"
@@ -71,19 +72,20 @@
                          style="max-height: 50px; max-width: 50px;"/>
                 </div>
             </xpath>
+
             <xpath expr="//field[@name='payment_reference']" position="after">
                 <field name="fne_payment_method"/>
             </xpath>
             <xpath expr="//button[@name='button_draft']" position="attributes">
                 <attribute name="attrs">
                     {
-                        'invisible': [
-                            '|',
-                            # Hide if it is a Signed Invoice
-                            '&amp;', ('move_type', '=', 'out_invoice'), ('fne_status', '=', 'signed'),
-                            # OR Hide if it is a Signed Refund (Avoir)
-                            '&amp;', ('move_type', '=', 'out_refund'), ('fne_refund_reference', '!=', False)
-                        ]
+                    'invisible': [
+                    '|',
+                    # Hide if it is a Signed Invoice
+                    '&amp;', ('move_type', '=', 'out_invoice'), ('fne_status', '=', 'signed'),
+                    # OR Hide if it is a Signed Refund (Avoir)
+                    '&amp;', ('move_type', '=', 'out_refund'), ('fne_refund_reference', '!=', False)
+                    ]
                     }
                 </attribute>
             </xpath>
