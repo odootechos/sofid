@@ -226,9 +226,20 @@ class AccountMove(models.Model):
         }
         return payload
 
+    def action_open_send_confirm_wizard(self):
+        self.ensure_one()
+        return {
+            'name': "Confirmation d’envoi à la DGI",
+            'type': 'ir.actions.act_window',
+            'res_model': 'dgi.send.confirm.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_invoice_id': self.id},
+        }
     # ============================
     # SEND FACTURE
     # ============================
+
     def action_send_to_dgi(self):
         for inv in self:
             if inv.move_type != 'out_invoice':
@@ -292,9 +303,21 @@ class AccountMove(models.Model):
                     'fne_line_id': item.get("id")
                 })
 
+
+
     # ============================
     # SEND AVOIR
     # ============================
+    def action_open_send_refund_confirm_wizard(self):
+        self.ensure_one()
+        return {
+            'name': "Confirmation d’envoi de l’avoir à la DGI",
+            'type': 'ir.actions.act_window',
+            'res_model': 'dgi.send.refund.confirm.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_invoice_id': self.id},
+        }
     def action_send_refund_to_dgi(self):
         self.ensure_one()
         if self.move_type != "out_refund":
