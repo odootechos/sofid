@@ -153,20 +153,10 @@ class AccountMove(models.Model):
             for tax in line.tax_ids:
                 tax_name = (tax.name or '').upper().strip()
 
-                # ============================================
-                # 🔹 TVA 18% SUSPENDUE (CAS SPÉCIAL SOFID)
-                # ============================================
-                if 'SUSPENDUE' in tax_name and '18' in tax_name:
-                    # On envoie TVAC à la DGI
-                    taxes = ['TVAC']
+                # ---- Taxes standard FNE ----
+                if 'TVA 18% NON FACTURÉE' in tax_name:
+                    taxes.append('TVAC')
 
-                    # On ajoute la vraie TVA suspendue en customTaxes
-                    custom_taxes.append({
-                        "name": "TVA 18% SUSPENDUE",
-                        "amount": 18.0
-                    })
-
-                # ---- TVA 18% classique ----
                 elif 'TVA 18.0%' in tax_name or 'TVA 18%' in tax_name:
                     taxes.append('TVA')
 
@@ -179,15 +169,11 @@ class AccountMove(models.Model):
                 elif 'TVAE' in tax_name:
                     taxes.append('TVAE')
 
-                # ---- TVA non facturée ----
-                elif 'NON FACTURÉE' in tax_name:
-                    taxes.append('TVAC')
-
-                # ---- AIRSI ----
+                # ---- Taxe AIRSI 5.0% (toujours custom) ----
                 elif 'AIRSI' in tax_name:
                     custom_taxes.append({
-                        "name": "AIRSI",
-                        "amount": 5.0
+                        "name": "AIRSI",  # Nom attendu par le FNE
+                        "amount": 5.0  # Taux fixe : 5.0%
                     })
 
                 else:
