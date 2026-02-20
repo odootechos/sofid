@@ -1,6 +1,6 @@
 {
     "name": "SOFID FNE",
-    "version": "16.0.1.0.0",
+    "version": "1.0",
     "category": "Accounting",
     "author": "SOFID",
     "summary": "Intégration FNE pour les factures client",
