@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_dgi_send_confirm_wizard,dgi.send.confirm.wizard,model_dgi_send_confirm_wizard,,1,1,1,1
-access_dgi_send_refund_confirm_wizard,dgi.send.refund.confirm.wizard,model_dgi_send_refund_confirm_wizard,,1,1,1,1
