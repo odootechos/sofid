@@ -14,13 +14,16 @@
                         string="Envoyer facture FNE"
                         class="oe_highlight"
                         attrs="{
-            'invisible': ['|',
-                ('move_type','!=','out_invoice'),
-                '|',
-                ('state','!=','posted'),
-                ('fne_status','!=','draft')
-            ]
-        }"/>
+                'invisible': [
+                    '|',
+                        ('move_type','!=','out_invoice'),
+                        '|',
+                            ('state','!=','posted'),
+                            ('fne_status','!=','draft')
+                ]
+            }"/>
+
+
 
                 <!-- Voir facture FNE (facture normale) -->
                 <button name="action_view_fne_invoice"
@@ -68,7 +71,7 @@
             <xpath expr="//sheet" position="inside">
                 <div style="position: absolute; top: 10px; right: 10px;"
                      attrs="{'invisible': [('fne_status', '!=', 'signed')]}">
-                    <img alt="FNE Logo" src="/sofid_dgi/static/src/image/logofne.png"
+                    <img src="/sofid_dgi/static/src/image/logofne.png"
                          style="max-height: 50px; max-width: 50px;"/>
                 </div>
             </xpath>
