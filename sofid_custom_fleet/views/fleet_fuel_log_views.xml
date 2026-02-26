@@ -1,0 +1,37 @@
+<odoo>
+
+    <record id="sofid_fleet_fuel_log_tree" model="ir.ui.view">
+        <field name="name">sofid.fleet.fuel.log.tree</field>
+        <field name="model">sofid.fleet.fuel.log</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date"/>
+                <field name="vehicle_id"/>
+                <field name="mobility_card"/>
+                <field name="supplier_id"/>
+                <field name="liters"/>
+                <field name="fuel_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sofid_fleet_fuel_log_form" model="ir.ui.view">
+        <field name="name">sofid.fleet.fuel.log.form</field>
+        <field name="model">sofid.fleet.fuel.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="vehicle_id"/>
+                        <field name="mobility_card"/>
+                        <field name="supplier_id"/>
+                        <field name="liters"/>
+                        <field name="fuel_type"/>
+                        <field name="date"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

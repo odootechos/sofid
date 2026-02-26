@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sofid_fleet_vehicle_model,sofid.fleet.vehicle.model,model_fleet_vehicle_model,,1,1,1,1
+access_sofid_fleet_vehicle,sofid.fleet.vehicle,model_fleet_vehicle,,1,1,1,1
+access_sofid_fleet_fuel_log_user,sofid.fleet.fuel.log.user,model_sofid_fleet_fuel_log,,1,1,1,0
+access_sofid_fleet_fuel_log_manager,sofid.fleet.fuel.log.manager,model_sofid_fleet_fuel_log,,1,1,1,1
