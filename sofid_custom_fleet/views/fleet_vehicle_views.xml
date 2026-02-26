@@ -1,0 +1,42 @@
+<odoo>
+    <record id="sofid_fleet_vehicle_form" model="ir.ui.view">
+        <field name="name">sofid.fleet.vehicle.form</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Placer avant Drivers History -->
+            <xpath expr="//button[@name='open_assignation_logs']" position="before">
+
+                <button name="open_fuel_logs"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-tint">
+
+                    <field name="fuel_log_count"
+                           widget="statinfo"
+                           string="Fuel Logs"/>
+
+                </button>
+
+            </xpath>
+
+
+            <!-- Masquer driver_id -->
+            <xpath expr="//field[@name='driver_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- Masquer future_driver_id -->
+            <xpath expr="//field[@name='future_driver_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- Ajouter après driver_id -->
+            <xpath expr="//field[@name='driver_id']" position="after">
+                <field name="employee_driver_id"/>
+                <field name="employee_future_driver_id"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
