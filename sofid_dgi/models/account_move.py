@@ -156,7 +156,9 @@ class AccountMove(models.Model):
                 # ============================================
                 # 🔹 TVA 18% SUSPENDUE (CAS SPÉCIAL SOFID)
                 # ============================================
-                if 'SUSPENDUE' in tax_name and '18' in tax_name:
+                tax_name_lower = tax_name.lower()
+
+                if 'suspendue' in tax_name_lower and '18' in tax_name_lower:
                     # On envoie TVAC à la DGI
                     taxes = ['TVAC']
 
@@ -165,6 +167,10 @@ class AccountMove(models.Model):
                         "name": "TVA 18% SUSPENDUE",
                         "amount": 18.0
                     })
+                    # ---- TVA non facturée ----
+                elif 'non factur' in tax_name_lower and '18' in tax_name_lower:
+                    # On envoie TVAC à la DGI
+                    taxes = ['TVAC']
 
                 # ---- TVA 18% classique ----
                 elif 'TVA 18.0%' in tax_name or 'TVA 18%' in tax_name:
@@ -179,9 +185,6 @@ class AccountMove(models.Model):
                 elif 'TVAE' in tax_name:
                     taxes.append('TVAE')
 
-                # ---- TVA non facturée ----
-                elif 'NON FACTURÉE' in tax_name:
-                    taxes.append('TVAC')
 
                 # ---- AIRSI ----
                 elif 'AIRSI' in tax_name:
@@ -223,7 +226,7 @@ class AccountMove(models.Model):
             'template': template,
             'isRne': template == 'B2F',
             'rne': self.fne_template if template == 'B2F' else '',
-            'clientNcc': partner.vat or '',
+            'clientNcc': partner.vat or partner.custom_ncc or '',
             'clientCompanyName': partner.name or '',
             'clientPhone': partner.phone or partner.mobile or '',
             'clientEmail': partner.email or '',
@@ -258,6 +261,7 @@ class AccountMove(models.Model):
         for inv in self:
             if inv.move_type != 'out_invoice':
                 raise UserError("Réservé aux factures client.")
+
             if inv.state != 'posted':
                 raise UserError("La facture doit être comptabilisée avant envoi.")
             if inv.fne_status == 'signed':
@@ -336,6 +340,8 @@ class AccountMove(models.Model):
         self.ensure_one()
         if self.move_type != "out_refund":
             raise UserError("Réservé aux avoirs.")
+        if self.state != 'posted':
+            raise UserError("L’avoir doit être comptabilisé avant envoi à la FNE.")
         if not self.reversed_entry_id:
             raise UserError("Cette facture d'avoir n'est pas liée à une facture d'origine.")
 
