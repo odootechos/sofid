@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ===================================================== -->
+    <!-- SERVICES -->
+    <!-- ===================================================== -->
+
+    <!-- FORM -->
+    <record id="fleet_vehicle_log_services_form_employee" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.form.employee</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='purchaser_id']" position="replace">
+                <field name="employee_purchaser_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- TREE -->
+    <record id="fleet_vehicle_log_services_tree_employee" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.tree.employee</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='purchaser_id']" position="replace">
+                <field name="employee_purchaser_id"/>
+            </xpath>
+        </field>
+    </record>
+
+ <!-- KANBAN -->
+    <record id="fleet_vehicle_log_services_kanban_employee" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.services.kanban.employee</field>
+        <field name="model">fleet.vehicle.log.services</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='purchaser_id']" position="replace">
+                <field name="employee_purchaser_id"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- CONTRACT -->
+    <!-- ===================================================== -->
+
+    <!-- FORM -->
+    <record id="fleet_vehicle_log_contract_form_employee" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.contract.form.employee</field>
+        <field name="model">fleet.vehicle.log.contract</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='purchaser_id']" position="replace">
+                <field name="employee_purchaser_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- TREE -->
+    <record id="fleet_vehicle_log_contract_tree_employee" model="ir.ui.view">
+        <field name="name">fleet.vehicle.log.contract.tree.employee</field>
+        <field name="model">fleet.vehicle.log.contract</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_log_contract_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='purchaser_id']" position="replace">
+                <field name="employee_purchaser_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- KANBAN -->
+<!--    <record id="fleet_vehicle_log_contract_kanban_employee" model="ir.ui.view">-->
+<!--        <field name="name">fleet.vehicle.log.contract.kanban.employee</field>-->
+<!--        <field name="model">fleet.vehicle.log.contract</field>-->
+<!--        <field name="inherit_id" ref="fleet.fleet_vehicle_log_contract_view_kanban"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='purchaser_id']" position="replace">-->
+<!--                <field name="employee_purchaser_id"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+    <!-- ===================================================== -->
+    <!-- ODOMETER -->
+    <!-- ===================================================== -->
+
+
+    <!-- TREE -->
+    <record id="fleet_vehicle_odometer_tree_employee" model="ir.ui.view">
+        <field name="name">fleet.vehicle.odometer.tree.employee</field>
+        <field name="model">fleet.vehicle.odometer</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='driver_id']" position="replace">
+                <field name="employee_driver_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
