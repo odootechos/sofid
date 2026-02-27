@@ -44,3 +44,30 @@ class FleetVehicle(models.Model):
                 'default_mobilite_card': self.mobility_card,
             }
         }
+
+class FleetVehicleLogServices(models.Model):
+    _inherit = 'fleet.vehicle.log.services'
+
+    employee_purchaser_id = fields.Many2one(
+        'hr.employee',
+        string='Conducteur',
+        tracking=True
+    )
+
+class FleetVehicleLogContract(models.Model):
+    _inherit = 'fleet.vehicle.log.contract'
+
+    employee_purchaser_id = fields.Many2one(
+        'hr.employee',
+        string='Conducteur',
+        tracking=True
+    )
+
+class FleetVehicleOdometer(models.Model):
+    _inherit = 'fleet.vehicle.odometer'
+
+    employee_driver_id = fields.Many2one(
+        'hr.employee',
+        string='Conducteur',
+        tracking=True
+    )
