@@ -71,3 +71,12 @@ class FleetVehicleOdometer(models.Model):
         string='Conducteur',
         tracking=True
     )
+
+class FleetVehicleAssignationLog(models.Model):
+    _inherit = 'fleet.vehicle.assignation.log'
+
+    employee_driver_id = fields.Many2one(
+        'hr.employee',
+        string='Conducteur',
+        tracking=True
+    )
