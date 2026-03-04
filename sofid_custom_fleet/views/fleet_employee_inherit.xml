@@ -105,7 +105,6 @@
     <!-- ===================================================== -->
 
 
-     <!-- TREE -->
     <record id="sofid_assignation_log_tree" model="ir.ui.view">
     <field name="name">sofid.assignation.log.tree</field>
     <field name="model">fleet.vehicle.assignation.log</field>
